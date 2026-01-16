@@ -123,7 +123,8 @@ class wpmlinstaller implements PluginInterface, EventSubscriberInterface
         }
 
         $wpml_sub_key = trim($this->getParameter('WPML_SUBSCRIPTION_KEY'));
-        if (preg_match("/^[a-zA-Z0-9$]{32}$/", $wpml_sub_key) !== 1) {
+        // Real WPML subscription keys contain special chars like $, /, . and vary in length
+        if (strlen($wpml_sub_key) < 10 || strlen($wpml_sub_key) > 100) {
             throw new faultykeyexception('WPML_SUBSCRIPTION_KEY');
         }
 
